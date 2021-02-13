@@ -78,8 +78,13 @@ const createSlider = () => {
   })
   changeSlide(0)
   if (duration < 0) {
-    return console.log('Sorry');
-  }else {
+    timer = setInterval(function () {
+      slideIndex++;
+      changeSlide(slideIndex);
+    }, 1000);
+    return alert('The duration cannot be negative, we set the default value for you');
+  }
+  else {
     timer = setInterval(function () {
       slideIndex++;
       changeSlide(slideIndex);
@@ -122,5 +127,5 @@ searchBtn.addEventListener('click', function () {
 })
 
 sliderBtn.addEventListener('click', function () {
-  createSlider()
+  createSlider();
 });

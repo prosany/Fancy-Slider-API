@@ -1,53 +1,77 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <title>Title</title>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
-    integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Title -->
+    <title>FancySlider.Com</title>
 </head>
-
 <body>
-  <div class="container">
-    <h4 class="mt-2 text-center">Search Image for create slider</h4>
-    <div class="form-inline mt-3 d-flex justify-content-center">
-      <div class="input-group col-md-6 mb-2">
-        <input type="text" class="form-control" id="search" placeholder="nature">
-      </div>
-      <button type="button" id="search-btn" class="btn btn-primary mb-2">Search</button>
-    </div>
-    <section class="images">
-      <div class="justify-content-around align-items-center mt-3 gallery-header mb-2">
-        <h3 class="head-title text-center">Select image for create slider</h3>
-        <div class="input-group col-md-3 mb-2 mb-md-0">
-          <input class="form-control" id="duration" placeholder="slider change duration">
+    <div class="container">
+        <!-- Header Title Start -->
+        <h4 class="mt-4 text-center">Find Images For Create Your Slider</h4>
+        <p class="mb-4 text-center useful-Links">
+            <a href="index.html">Assignment 6</a>
+            <span>|</span>
+            <a href="https://github.com/prosany/Fancy-Slider-API">Go Back To Repository</a>
+        </p>
+        <!-- Header Title End -->
+        <!-- Search Field Start -->
+        <div class="form-inline mt-3 d-flex justify-content-center">
+            <div class="input-group col-md-6 mb-2">
+                <input type="text" class="form-control" id="search" placeholder="Find Pictures by Name" />
+            </div>
+            <button type="button" id="search-btn" class="btn btn-danger mb-2">Search</button>
         </div>
-        <button id="create-slider" class="btn btn-primary px-5">Create slider</button>
-      </div>
-      <div class="row gallery">
-
-      </div>
-    </section>
-    <!-- slider -->
-    <div class="main">
-      <section class="mt-5" id="sliders">
-
-      </section>
-      <div class="dots d-flex mt-2 w-100 justify-content-center align-items-center bg-light">
-        <span class="dot" onclick="changeItem(-1)"></span>
-        <span class="dot" onclick="changeItem(1)"></span>
-      </div>
+        <!-- Search Field End -->
+        <!-- Nothing Found Start -->
+        <div id="nothing-found">
+            <h3 class="text-danger nothing-found"><i class="fas fa-times"></i>Oops! Nothing Found <i class="fas fa-sad-tear"></i></h3>
+        </div>
+        <!-- Nothing Found End -->
+        <!-- Loading Spinner Start -->
+        <div id="loader">
+            <div class="spinner-grow spinner-design" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Loading Spinner End -->
+        <!-- Search Results Start -->
+        <section class="images">
+            <div class="justify-content-around align-items-center mt-3 gallery-header mb-2 my-2">
+                <h3 class="head-title text-center">Select Your Favorite Image for Create Slider</h3>
+                <div class="input-group col-md-3 mb-2 mb-md-0">
+                    <input class="form-control" id="duration" placeholder="Slider Change Duration" />
+                </div>
+                <button id="create-slider" class="btn btn-danger px-5">Create Slider</button>
+            </div>
+            <div class="row gallery"></div>
+        </section>
+        <!-- Search Results End -->
+        <!-- Slider Start -->
+        <div class="main">
+            <section class="mt-5" id="sliders"></section>
+            <div class="dots d-flex mt-2 w-100 justify-content-center align-items-center">
+                <span class="dot" onclick="changeItem(-1)"></span>
+                <span class="dot" onclick="changeItem(1)"></span>
+            </div>
+            <div class="d-flex justify-content-center m-4">
+                <button class="btn btn-warning go_results_page" onclick="closeSlider()">
+                    <i class="fas fa-step-backward"></i> Go Back To Results Page
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- Optional JavaScript -->
-  <script src="./app.js"></script>
+    <!-- JavaScript Files -->
+    <script src="./app.js"></script>
+    <script src="https://kit.fontawesome.com/85066693d8.js" crossorigin="anonymous"></script>
 </body>
 </html>

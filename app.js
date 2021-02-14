@@ -4,6 +4,10 @@ const galleryHeader = document.querySelector('.gallery-header');
 const searchBtn = document.getElementById('search-btn');
 const sliderBtn = document.getElementById('create-slider');
 const sliderContainer = document.getElementById('sliders');
+const searchField = document.getElementById('search');
+const loaderArea = document.getElementById('loader');
+const notFoundArea = document.getElementById('nothing-found');
+
 // selected image 
 let sliders = [];
 
@@ -29,10 +33,20 @@ const showImages = (images) => {
 }
 
 const getImages = (query) => {
+  showNotFoundMessage(false)
+  showLoader(true)
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
-    .then(data => showImages(data.hits))
+    .then(data => {
+      showLoader(false)
+      if (data.total > 0) {
+        showImages(data.hits)
+      } else {
+        showNotFoundMessage(true)
+      }
+    })
     .catch(err => console.log(err))
+
 }
 
 let slideIndex = 0;
@@ -44,7 +58,8 @@ const selectItem = (event, img) => {
   if (item === -1) {
     sliders.push(img);
   } else {
-    alert('Hey, Already added !')
+    sliders.splice(item, 1)
+    element.classList.remove('added')
   }
 }
 var timer
@@ -65,6 +80,8 @@ const createSlider = () => {
 
   sliderContainer.appendChild(prevNext)
   document.querySelector('.main').style.display = 'block';
+
+
   // hide image aria
   imagesArea.style.display = 'none';
   const duration = document.getElementById('duration').value || 1000;
@@ -72,17 +89,17 @@ const createSlider = () => {
     let item = document.createElement('div')
     item.className = "slider-item";
     item.innerHTML = `<img class="w-100"
-    src="${slide}"
-    alt="">`;
+  src="${slide}"
+  alt="">`;
     sliderContainer.appendChild(item)
   })
   changeSlide(0)
-  if (duration < 0) {
+  if (duration <= 300) {
     timer = setInterval(function () {
       slideIndex++;
       changeSlide(slideIndex);
     }, 1000);
-    return alert('The duration cannot be negative, we set the default value for you');
+    return alert('The duration cannot be negative or less then 300 millisecond, we set the default value 1s for you');
   }
   else {
     timer = setInterval(function () {
@@ -91,6 +108,7 @@ const createSlider = () => {
     }, duration);
   }
 }
+
 
 // change slider index 
 const changeItem = index => {
@@ -117,15 +135,59 @@ const changeSlide = (index) => {
 
   items[index].style.display = "block"
 }
-
+// Trigger search after click search button
 searchBtn.addEventListener('click', function () {
-  document.querySelector('.main').style.display = 'none';
-  clearInterval(timer);
-  const search = document.getElementById('search');
-  getImages(search.value)
-  sliders.length = 0;
+  search()
 })
+// Trigger search after hit enter
+searchField.addEventListener('keypress', function (event) {
+  event.key == 'Enter' && search()
+})
+// Trigger image searching
+const search = () => {
+  if (searchField.value != '') {
+    document.querySelector('.main').style.display = 'none';
+    clearInterval(timer);
+    getImages(searchField.value)
+    sliders.length = 0;
+    searchField.value = '';
+  } else {
+    alert('Sorry, Search field cannot be empty')
+  }
+}
 
 sliderBtn.addEventListener('click', function () {
-  createSlider();
-});
+  createSlider()
+  document.getElementById('duration').value = ''
+})
+// Show and hide loader
+const showLoader = condition => {
+  if (condition) {
+    loaderArea.style.display = 'flex'
+    imagesArea.style.display = 'none';
+  } else {
+    loaderArea.style.display = 'none'
+    imagesArea.style.display = 'block';
+  }
+}
+// Show and hide nothing is found message
+const showNotFoundMessage = condition => {
+  if (condition) {
+    loaderArea.style.display = 'none'
+    imagesArea.style.display = 'none';
+    notFoundArea.style.display = 'flex'
+  } else {
+    notFoundArea.style.display = 'none'
+  }
+}
+// Close slider after clicking go back button
+const closeSlider = () => {
+  document.querySelector('.main').style.display = 'none';
+  imagesArea.style.display = 'block';
+  sliders = [];
+  clearInterval(timer);
+  const item = document.getElementsByClassName('added');
+  for (let i = 0; i <= item.length + 1; i++) {
+    item[0].classList.remove('added');
+  }
+}
